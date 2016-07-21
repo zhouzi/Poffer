@@ -22,6 +22,9 @@ app.get('/status', function (req, res) {
   });
 });
 
+var pocket = require('./routes/pocket');
+app.use('/api/pocket', pocket);
+
 app.get('/', function (req, res) {
   res.render('index', {
     env: JSON.stringify({
@@ -31,6 +34,10 @@ app.get('/', function (req, res) {
       }
     })
   });
+});
+
+app.get('/pocket/callback', function (req, res) {
+  res.render('pocket-callback');
 });
 
 app.use(function (req, res) {
