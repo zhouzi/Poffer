@@ -1,0 +1,31 @@
+@import './normalize.css';
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: 1rem;
+  color: #3d3d3d;
+  line-height: 1.4;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0 0 1rem 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}

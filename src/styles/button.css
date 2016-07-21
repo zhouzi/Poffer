@@ -1,0 +1,23 @@
+.button {
+  font: inherit;
+  color: inherit;
+  padding: 0.4rem 0.6rem;
+  border: 2px solid #dadada;
+  background: transparent;
+  cursor: pointer;
+}
+
+.button:focus,
+.button:hover {
+  background: #eee;
+}
+
+.button[disabled] {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.buttonBlock {
+  display: block;
+  width: 100%;
+}

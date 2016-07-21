@@ -1,0 +1,16 @@
+.row {
+  margin: 0 -0.5rem;
+}
+
+.row:before,
+.row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.col6 {
+  width: 50%;
+  float: left;
+  padding: 0 0.5rem;
+}

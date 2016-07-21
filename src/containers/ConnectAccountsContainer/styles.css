@@ -1,0 +1,9 @@
+.buttonList {
+  composes: listUnstyled from 'styles/list.css';
+  composes: row from 'styles/grid.css';
+  margin-top: 1rem;
+}
+
+.buttonListItem {
+  composes: col6 from 'styles/grid.css';
+}
