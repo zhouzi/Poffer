@@ -22,7 +22,7 @@ app.get('/status', function (req, res) {
   });
 });
 
-app.use(function (req, res) {
+app.get('/', function (req, res) {
   res.render('index', {
     env: JSON.stringify({
       buffer: {
@@ -30,6 +30,16 @@ app.use(function (req, res) {
         redirect_uri: process.env.BUFFER_REDIRECT_URI
       }
     })
+  });
+});
+
+app.use(function (req, res) {
+  res.statusCode = 404;
+
+  res.json({
+    status: 'error',
+    code: 404,
+    message: 'Page not found'
   });
 });
 
