@@ -22,17 +22,35 @@ app.get('/status', function (req, res) {
   });
 });
 
-var pocket = require('./routes/pocket');
-app.use('/api/pocket', pocket);
+var pocketRoute = require('./routes/pocket');
+app.use('/api/pocket', pocketRoute);
 
+var pocketClient = require('./lib/pocketClient');
 app.get('/', function (req, res) {
-  res.render('index', {
-    env: JSON.stringify({
-      buffer: {
-        client_id: process.env.BUFFER_CLIENT_ID,
-        redirect_uri: process.env.BUFFER_REDIRECT_URI
-      }
-    })
+  pocketClient.getRequestToken(function (err, pocketRequestToken) {
+    if (err) {
+      res.statusCode = 500;
+      res.json({
+        status: 'error',
+        message: err.message
+      });
+      return;
+    }
+
+    res.render('index', {
+      env: JSON.stringify({
+        accounts: {
+          buffer: {
+            client_id: process.env.BUFFER_CLIENT_ID,
+            redirect_uri: process.env.BUFFER_REDIRECT_URI
+          },
+          pocket: {
+            request_token: pocketRequestToken,
+            redirect_uri: process.env.POCKET_REDIRECT_URI
+          }
+        }
+      })
+    });
   });
 });
 
