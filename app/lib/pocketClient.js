@@ -22,3 +22,35 @@ module.exports.getRequestToken = function getRequestToken (callback) {
     callback(null, request_token);
   });
 };
+
+module.exports.getAccessToken = function getAccessToken (request_token, callback) {
+  var options = _.assign({}, defaults, {
+    url: 'https://getpocket.com/v3/oauth/authorize',
+    body: JSON.stringify({
+      consumer_key: process.env.POCKET_CONSUMER_KEY,
+      code: request_token
+    })
+  });
+
+  request.post(options, function (error, response, body) {
+    callback(null, JSON.parse(body).access_token);
+  });
+};
+
+module.exports.getItems = function getItems (access_token, tag, callback) {
+  var options = _.assign({}, defaults, {
+    url: 'https://getpocket.com/v3/get',
+    body: JSON.stringify({
+      consumer_key: process.env.POCKET_CONSUMER_KEY,
+      access_token: access_token,
+      tag: tag,
+      sort: 'newest',
+      detailType: 'simple'
+    })
+  });
+
+  request.post(options, function (error, response, body) {
+    var items = JSON.parse(body).list;
+    callback(null, items);
+  });
+};
