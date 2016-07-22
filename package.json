@@ -23,6 +23,8 @@
     "postcss-loader": "0.9.1",
     "react": "15.2.1",
     "react-dom": "15.2.1",
+    "redux": "3.5.2",
+    "redux-thunk": "2.1.0",
     "style-loader": "0.13.1"
   },
   "dependencies": {
