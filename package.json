@@ -2,8 +2,8 @@
   "private": true,
   "scripts": {
     "start": "node app/index.js",
-    "dev": "NODE_ENV=development webpack --progress --watch",
-    "build": "NODE_ENV=production webpack"
+    "dev": "NODE_ENV=development webpack --progress --watch -d",
+    "build": "NODE_ENV=production webpack -p -d"
   },
   "babel": {
     "presets": [
