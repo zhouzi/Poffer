@@ -1,3 +1,17 @@
+var requiredEnvVariables = [
+  'POCKET_CONSUMER_KEY',
+  'POCKET_REDIRECT_URI',
+  'BUFFER_CLIENT_ID',
+  'BUFFER_CLIENT_SECRET',
+  'BUFFER_REDIRECT_URI'
+];
+
+requiredEnvVariables.forEach(function (name) {
+  if (!process.env.hasOwnProperty(name)) {
+    throw new Error('Missing environment variable ' + name);
+  }
+});
+
 var MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017/poffer';
 var mongoose = require('mongoose');
 mongoose.connect(MONGO_URL);
