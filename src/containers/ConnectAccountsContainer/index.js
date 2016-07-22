@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styles from './styles.css';
@@ -8,6 +8,14 @@ import { authSuccess as pocketAuthSuccess } from 'actions/pocket';
 import { authSuccess as bufferAuthSuccess } from 'actions/buffer';
 
 export default class ConnectAccountsContainer extends Component {
+  static propTypes = {
+    pocket: PropTypes.object.isRequired,
+    buffer: PropTypes.object.isRequired,
+    onPocketAuth: PropTypes.func.isRequired,
+    onBufferAuth: PropTypes.func.isRequired,
+    onNext: PropTypes.func.isRequired,
+  };
+
   onMessage = (message) => {
     if (typeof message.data !== 'string') {
       return;
@@ -29,6 +37,12 @@ export default class ConnectAccountsContainer extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('message', this.onMessage);
+  }
+
+  componentWillReceiveProps ({ pocket, buffer }) {
+    if (pocket.succeed && buffer.succeed) {
+      this.props.onNext();
+    }
   }
 
   render () {
