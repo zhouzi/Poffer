@@ -72,6 +72,10 @@ app.get('/pocket/callback', function (req, res) {
   res.render('pocket-callback');
 });
 
+app.get('/buffer/callback', function (req, res) {
+  res.render('buffer-callback');
+});
+
 app.use(function (req, res) {
   res.statusCode = 404;
 
