@@ -3,6 +3,7 @@ import styles from './styles.css';
 import times from 'lodash/times';
 import TweetEditor from 'components/TweetEditor';
 import map from 'lodash/map';
+import pickBy from 'lodash/pickBy';
 
 export default class PocketItem extends Component {
   static propTypes = {
@@ -22,7 +23,7 @@ export default class PocketItem extends Component {
         [index]: value
       }
     }, () => this.props.onChange({
-      [this.props.item.item_id]: this.state.tweets
+      [this.props.item.item_id]: pickBy(this.state.tweets, (tweet) => tweet.content)
     }));
   };
 
