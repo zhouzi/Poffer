@@ -8,6 +8,11 @@
   border-color: transparent;
 }
 
+.button:focus,
+.button:hover {
+  background-color: #e25151;
+}
+
 .button[disabled] {
   color: var(--colorSecondary);
   background-color: transparent;

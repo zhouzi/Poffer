@@ -15,7 +15,7 @@ export default function PocketItem ({ item, tweetTimes }) {
       </div>
 
       {times(tweetTimes, (index) => (
-        <div className={styles.tweetEditor}>
+        <div key={index} className={styles.tweetEditor}>
           <TweetEditor key={index} />
         </div>
       ))}

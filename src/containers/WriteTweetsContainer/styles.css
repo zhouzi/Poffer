@@ -1,3 +1,5 @@
+@import 'styles/variables.css';
+
 .container {
   composes: section from 'styles/grid.css';
 }
@@ -15,5 +17,7 @@
 }
 
 .listItem {
-  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px dotted var(--colorGray);
 }
