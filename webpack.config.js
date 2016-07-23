@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: './src',
@@ -27,5 +28,10 @@ module.exports = {
   postcss: [
     require('postcss-import')({ path: ['src']}),
     require('postcss-cssnext')
+  ],
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"' + process.env.NODE_ENV + '"'
+    })
   ]
 };
