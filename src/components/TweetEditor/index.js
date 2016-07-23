@@ -8,12 +8,21 @@ const CHARACTERS_PER_MEDIA = 24;
 export default class TweetEditor extends Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
+    defaultValue: PropTypes.string,
   };
 
-  state = {
-    content: '',
-    image: '',
+  static defaultProps = {
+    defaultValue: ''
   };
+
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      content: props.defaultValue,
+      image: '',
+    };
+  }
 
   onChange = (value) => {
     this.setState(value, () => this.props.onChange(this.state));
@@ -38,6 +47,7 @@ export default class TweetEditor extends Component {
           className={styles.contentInput}
           placeholder="Tweet content..."
           onChange={(event) => this.onChange({ content: event.target.value })}
+          value={this.state.content}
         />
 
         <input
@@ -45,6 +55,7 @@ export default class TweetEditor extends Component {
           className={styles.imageInput}
           placeholder="Image's url"
           onChange={(event) => this.onChange({ image: event.target.value })}
+          value={this.state.image}
         />
 
         <div className={styles.contentCounter}>

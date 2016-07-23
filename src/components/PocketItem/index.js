@@ -26,10 +26,6 @@ export default class PocketItem extends Component {
     }));
   };
 
-  getTweets = () => {
-    return map(this.state.tweets, (tweet) => tweet);
-  };
-
   render () {
     const { item, tweetTimes } = this.props;
 
@@ -48,6 +44,7 @@ export default class PocketItem extends Component {
             <TweetEditor
               key={index}
               onChange={(value) => this.onTweetChange(index, value)}
+              defaultValue={item.resolved_url}
             />
           </div>
         ))}
