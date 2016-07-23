@@ -1,23 +1,21 @@
-.button {
-  font: inherit;
-  color: inherit;
-  padding: 0.4rem 0.6rem;
-  border: 2px solid #dadada;
-  background: transparent;
-  cursor: pointer;
-}
+@import 'styles/variables.css';
 
-.button:focus,
-.button:hover {
-  background: #eee;
+.button {
+  composes: input from 'styles/form.css';
+  cursor: pointer;
+  color: #fff;
+  background: var(--colorSecondary);
+  border-color: transparent;
 }
 
 .button[disabled] {
-  pointer-events: none;
+  color: var(--colorSecondary);
+  background-color: transparent;
+  border-color: var(--colorSecondary);
   opacity: 0.6;
+  pointer-events: none;
 }
 
-.buttonBlock {
-  display: block;
-  width: 100%;
+.button [class^="icon-"] {
+  margin-right: 0.5rem;
 }

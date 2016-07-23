@@ -1,0 +1,35 @@
+@import 'styles/variables.css';
+
+.item {
+  position: relative;
+  color: #fff;
+  background-color: var(--colorPrimary);
+  font-size: 1.2rem;
+  border-radius: 4px;
+  padding: 1rem 1rem 1rem 2rem;
+  margin-bottom: 1rem;
+}
+
+.itemOpenLink {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  background-color: var(--colorSecondary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.itemOpenLink [class^="icon-"] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tweetEditor {
+  margin-bottom: 2rem;
+}

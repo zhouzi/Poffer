@@ -1,0 +1,11 @@
+@import 'styles/variables.css';
+
+.input {
+  display: block;
+  color: var(--colorText);
+  width: 100%;
+  font: inherit;
+  padding: 0.6rem;
+  border-radius: var(--borderRadius);
+  border: 2px solid var(--colorGray);
+}

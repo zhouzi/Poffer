@@ -27,12 +27,3 @@ function fetchItemsSuccess (items) {
     payload: items
   };
 }
-
-export const POCKET_SELECT_ITEMS = 'POCKET_SELECT_ITEMS';
-
-export function selectItems (items) {
-  return {
-    type: POCKET_SELECT_ITEMS,
-    payload: items
-  };
-}

@@ -1,4 +1,3 @@
 .button {
   composes: button from 'styles/button.css';
-  composes: buttonBlock from 'styles/button.css';
 }

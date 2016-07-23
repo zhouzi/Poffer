@@ -1,0 +1,24 @@
+@import 'styles/variables.css';
+
+.contentInput,
+.imageInput {
+  composes: input from 'styles/form.css';
+}
+
+.contentBlock {
+  margin-bottom: 0.5rem;
+}
+
+.contentInput {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.contentCounter {
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  text-align: right;
+  background-color: var(--colorGray);
+  border-bottom-left-radius: var(--borderRadius);
+  border-bottom-right-radius: var(--borderRadius);
+}

@@ -1,3 +1,4 @@
+@import 'styles/variables.css';
 @import './normalize.css';
 
 *,
@@ -12,20 +13,38 @@ html {
 }
 
 body {
-  font-family: sans-serif;
-  font-size: 1rem;
-  color: #3d3d3d;
-  line-height: 1.4;
+  font-family: 'PT Sans', sans-serif;
   font-weight: normal;
+  line-height: 1.4;
+  font-size: 1rem;
+  color: var(--colorText);
 }
 
-h1 {
-  font-size: 2rem;
+p {
   margin: 0 0 1rem 0;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 0;
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: var(--colorGray);
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: var(--colorGray);
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  color: var(--colorGray);
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: var(--colorGray);
+}
+
+[class^="icon-"] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+[class^="icon-"]:before {
+  display: block;
 }

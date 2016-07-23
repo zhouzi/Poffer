@@ -10,16 +10,10 @@
   composes: sectionTitle from 'styles/typography.css';
 }
 
-.buttonList {
+.list {
   composes: listUnstyled from 'styles/list.css';
-  display: table;
-  width: 100%;
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
 }
 
-.buttonListItem {
-  display: table-cell;
-  width: 50%;
-  padding: 0 0.5rem;
+.listItem {
+  margin-bottom: 1rem;
 }

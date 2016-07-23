@@ -1,0 +1,36 @@
+.container {
+  composes: section from 'styles/grid.css';
+}
+
+.inner {
+  composes: container from 'styles/grid.css';
+}
+
+.title {
+  composes: sectionTitle from 'styles/typography.css';
+}
+
+.input {
+  composes: input from 'styles/form.css';
+}
+
+.button {
+  composes: button from 'styles/button.css';
+}
+
+.form {
+  composes: row from 'styles/grid.css';
+}
+
+.formInput,
+.formButton {
+  composes: column from 'styles/grid.css';
+}
+
+.formInput {
+  width: 80%;
+}
+
+.formButton {
+  width: 20%;
+}

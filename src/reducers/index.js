@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import accounts from './accounts';
 import items from './items';
-import selectedItems from './selectedItems';
+import tweetTimes from './tweetTimes';
 
 export default combineReducers({
   accounts,
   items,
-  selectedItems,
+  tweetTimes,
 });

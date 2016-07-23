@@ -13,7 +13,6 @@ export default class ConnectAccountsContainer extends Component {
     buffer: PropTypes.object.isRequired,
     onPocketAuth: PropTypes.func.isRequired,
     onBufferAuth: PropTypes.func.isRequired,
-    onNext: PropTypes.func.isRequired,
   };
 
   onMessage = (message) => {
@@ -39,42 +38,38 @@ export default class ConnectAccountsContainer extends Component {
     window.removeEventListener('message', this.onMessage);
   }
 
-  componentWillReceiveProps ({ pocket, buffer }) {
-    if (pocket.succeed && buffer.succeed) {
-      this.props.onNext();
-    }
-  }
-
   render () {
     const { pocket, buffer } = this.props;
 
     return (
-      <div>
-        Please connect your accounts in order to retrieve your Pocket items and add tweets to your Buffer queue.
+      <div className={styles.container}>
+        <div className={styles.inner}>
+          <div className={styles.title}>
+            Connect your accounts
+          </div>
 
-        <ul className={styles.buttonList}>
-          <li className={styles.buttonListItem}>
-            {pocket.succeed ? (
-              <div>Pocket Connected!</div>
-            ) : (
+          <p>
+            In order to access your Pocket items and Buffer queue, you need to first connect those accounts.
+          </p>
+
+          <ul className={styles.buttonList}>
+            <li className={styles.buttonListItem}>
               <PocketConnectButton
+                succeed={pocket.succeed}
                 request_token={pocket.request_token}
                 redirect_uri={pocket.redirect_uri}
               />
-            )}
-          </li>
+            </li>
 
-          <li className={styles.buttonListItem}>
-            {buffer.succeed ? (
-              <div>Buffer Connected!</div>
-            ) : (
+            <li className={styles.buttonListItem}>
               <BufferConnectButton
+                succeed={buffer.succeed}
                 client_id={buffer.client_id}
                 redirect_uri={buffer.redirect_uri}
               />
-            )}
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }
