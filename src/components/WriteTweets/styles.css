@@ -1,7 +1,6 @@
 @import 'styles/variables.css';
 
 .container {
-  composes: section from 'styles/grid.css';
 }
 
 .inner {
@@ -16,7 +15,7 @@
   composes: listUnstyled from 'styles/list.css';
 }
 
-.listItem {
+.listItem:not(:last-child) {
   padding-bottom: 1rem;
   margin-bottom: 2rem;
   border-bottom: 2px dotted var(--colorGray);

@@ -1,5 +1,4 @@
 .container {
-  composes: section from 'styles/grid.css';
 }
 
 .inner {

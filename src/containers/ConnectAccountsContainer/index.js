@@ -7,7 +7,7 @@ import BufferConnectButton from 'components/BufferConnectButton';
 import { authSuccess as pocketAuthSuccess } from 'actions/pocket';
 import { authSuccess as bufferAuthSuccess } from 'actions/buffer';
 
-export default class ConnectAccountsContainer extends Component {
+class ConnectAccountsContainer extends Component {
   static propTypes = {
     pocket: PropTypes.object.isRequired,
     buffer: PropTypes.object.isRequired,
@@ -45,7 +45,7 @@ export default class ConnectAccountsContainer extends Component {
       <div className={styles.container}>
         <div className={styles.inner}>
           <div className={styles.title}>
-            Connect your accounts
+            Connect your Accounts
           </div>
 
           <p>

@@ -1,13 +1,16 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import styles from './styles.css';
 import map from 'lodash/map';
+import mapValues from 'lodash/mapValues';
+import pick from 'lodash/pick';
+import identity from 'lodash/identity';
 import PocketItem from 'components/PocketItem';
 
-export default class WriteTweetsContainer extends Component {
+export default class WriteTweets extends Component {
   static propTypes = {
     items: PropTypes.object,
     tweetTimes: PropTypes.number.isRequired,
+    onChange: PropTypes.func.isRequired,
   };
 
   render () {
@@ -28,6 +31,7 @@ export default class WriteTweetsContainer extends Component {
                 <PocketItem
                   item={item}
                   tweetTimes={this.props.tweetTimes}
+                  onChange={this.props.onChange}
                 />
               </li>
             ))}
@@ -37,9 +41,3 @@ export default class WriteTweetsContainer extends Component {
     );
   }
 }
-
-function mapStateToProps ({ items, tweetTimes }) {
-  return { items, tweetTimes };
-}
-
-export default connect(mapStateToProps, null)(WriteTweetsContainer);

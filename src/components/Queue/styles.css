@@ -1,0 +1,11 @@
+.container {
+  composes: sectionBackground from 'styles/grid.css';
+}
+
+.inner {
+  composes: container from 'styles/grid.css';
+}
+
+.title {
+  composes: sectionTitle from 'styles/typography.css';
+}

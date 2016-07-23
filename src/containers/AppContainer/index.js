@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import styles from './styles.css';
+import React  from 'react';
+import './styles.css';
 import Hero from 'components/Hero';
 import ConnectAccountsContainer from 'containers/ConnectAccountsContainer';
 import PocketTagContainer from 'containers/PocketTagContainer';
-import WriteTweetsContainer from 'containers/WriteTweetsContainer';
+import WritePublishTweetsContainer from 'containers/WritePublishTweetsContainer';
 
 export default function AppContainer () {
   return (
@@ -11,7 +11,7 @@ export default function AppContainer () {
       <Hero />
       <ConnectAccountsContainer />
       <PocketTagContainer />
-      <WriteTweetsContainer />
+      <WritePublishTweetsContainer />
     </div>
   );
 };

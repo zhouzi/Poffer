@@ -1,5 +1,5 @@
 .container {
-  composes: section from 'styles/grid.css';
+  composes: sectionBackground from 'styles/grid.css';
 }
 
 .inner {
