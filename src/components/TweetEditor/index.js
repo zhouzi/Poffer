@@ -5,19 +5,19 @@ export default class TweetEditor extends Component {
   render () {
     return (
       <form>
-        <div className={styles.contentBlock}>
-          <textarea
-            className={styles.contentInput}
-            placeholder="Tweet content..."
-          />
+        <textarea
+          className={styles.contentInput}
+          placeholder="Tweet content..."
+        />
 
-          <div className={styles.contentCounter}>
-            144 characters left
-          </div>
-        </div>
+        <input
+          type="url"
+          className={styles.imageInput}
+          placeholder="Image's url"
+        />
 
-        <div className={styles.imageBlock}>
-          <input type="url" className={styles.imageInput} placeholder="Image's url" />
+        <div className={styles.contentCounter}>
+          144 characters left
         </div>
       </form>
     );

@@ -5,13 +5,14 @@
   composes: input from 'styles/form.css';
 }
 
-.contentBlock {
-  margin-bottom: 0.5rem;
-}
-
 .contentInput {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  border-bottom: 0;
+}
+
+.imageInput {
+  border-radius: 0;
 }
 
 .contentCounter {
