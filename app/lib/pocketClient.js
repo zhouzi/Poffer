@@ -50,7 +50,13 @@ module.exports.getItems = function getItems (access_token, tag, callback) {
   });
 
   request.post(options, function (error, response, body) {
-    var items = JSON.parse(body).list;
+    var items = _.mapValues(JSON.parse(body).list, function (item) {
+      return _.pick(item, [
+        'item_id',
+        'resolved_title',
+        'resolved_url',
+      ]);
+    });
     callback(null, items);
   });
 };
