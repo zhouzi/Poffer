@@ -1,3 +1,5 @@
+@import 'styles/variables.css';
+
 .container {
   composes: sectionBackground from 'styles/grid.css';
 }
@@ -8,4 +10,27 @@
 
 .title {
   composes: sectionTitle from 'styles/typography.css';
+}
+
+.tweet {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: var(--borderRadius);
+  margin-bottom: 1rem;
+}
+
+.tweetContent {
+  font-size: 1.4rem;
+}
+
+.tweetImage {
+  height: 140px;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  margin-top: 0.5rem;
+}
+
+.button {
+  composes: button from 'styles/button.css';
 }
