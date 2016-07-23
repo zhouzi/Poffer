@@ -9,9 +9,21 @@ export default class Queue extends Component {
     tweets: PropTypes.object.isRequired
   };
 
-  getOrderedList = () => {
-    const { tweets } = this.props;
+  constructor (props) {
+    super(props);
 
+    this.state = {
+      queue: this.getOrderedList(props.tweets)
+    };
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      queue: this.getOrderedList(nextProps.tweets)
+    });
+  }
+
+  getOrderedList = (tweets) => {
     // turns a complex map into an array of arrays, e.g:
     // {
     //   abc: {
@@ -92,7 +104,7 @@ export default class Queue extends Component {
             That's the final order that's going to be sent to your Buffer queue.
           </p>
 
-          {this.getOrderedList().map((tweet, index) => (
+          {this.state.queue.map((tweet, index) => (
             <div key={index} className={styles.tweet}>
               <div className={styles.tweetContent}>
                 {tweet.content}
