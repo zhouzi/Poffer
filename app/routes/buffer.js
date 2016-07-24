@@ -3,7 +3,44 @@ var bufferClient = require('../lib/bufferClient');
 
 router.post('/add', function (req, res) {
   var request_token = decodeURIComponent(req.query.request_token);
+  var twitter_username = decodeURIComponent(req.query.twitter_username);
   var tweets = req.body;
+
+  if (!request_token) {
+    res.statusCode = 400;
+    res.json({
+      status: 'error',
+      message: 'request_token missing'
+    });
+    return;
+  }
+
+  if (!twitter_username) {
+    res.statusCode = 400;
+    res.json({
+      status: 'error',
+      message: 'twitter_username missing'
+    });
+    return;
+  }
+
+  if (!tweets) {
+    res.statusCode = 400;
+    res.json({
+      status: 'error',
+      message: 'tweets missing'
+    });
+    return;
+  }
+
+  if (tweets.length === 0) {
+    res.statusCode = 400;
+    res.json({
+      status: 'error',
+      message: 'empty tweets'
+    });
+    return;
+  }
 
   bufferClient.getAccessToken(request_token, function (err, accessToken) {
     if (err) {
@@ -15,7 +52,7 @@ router.post('/add', function (req, res) {
       return;
     }
 
-    bufferClient.addItemsToQueue(accessToken, tweets, function (err) {
+    bufferClient.getTwitterProfile(accessToken, twitter_username, function (err, profile) {
       if (err) {
         res.statusCode = 500;
         res.json({
@@ -25,8 +62,19 @@ router.post('/add', function (req, res) {
         return;
       }
 
-      res.json({
-        status: 'ok'
+      bufferClient.addItemsToQueue(accessToken, profile.id, tweets, function (err) {
+        if (err) {
+          res.statusCode = 500;
+          res.json({
+            status: 'error',
+            message: err.message
+          });
+          return;
+        }
+
+        res.json({
+          status: 'ok'
+        });
       });
     });
   });

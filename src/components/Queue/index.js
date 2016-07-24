@@ -17,7 +17,8 @@ export default class Queue extends Component {
     super(props);
 
     this.state = {
-      queue: this.getOrderedList(props.tweets)
+      queue: this.getOrderedList(props.tweets),
+      twitterUsername: '',
     };
   }
 
@@ -28,7 +29,7 @@ export default class Queue extends Component {
 
     if (message.data.indexOf('poffer:buffer:auth') === 0) {
       const code = message.data.replace('poffer:buffer:auth:', '');
-      this.props.onPublish(code, this.state.queue);
+      this.props.onPublish(code, this.state.twitterUsername, this.state.queue);
     }
   };
 
@@ -115,9 +116,14 @@ export default class Queue extends Component {
     return sorted;
   };
 
-  render () {
-    const { bufferClientId, bufferRedirectUri } = this.props;
+  onSubmit = (event) => {
+    event.preventDefault();
 
+    const { bufferClientId, bufferRedirectUri } = this.props;
+    openPopup(`https://bufferapp.com/oauth2/authorize?client_id=${bufferClientId}&redirect_uri=${encodeURIComponent(bufferRedirectUri)}&response_type=code`)
+  };
+
+  render () {
     return (
       <div className={styles.container}>
         <div className={styles.inner}>
@@ -144,13 +150,25 @@ export default class Queue extends Component {
             </div>
           ))}
 
-          <button
-            type="button"
-            className={styles.button}
-            onClick={() => openPopup(`https://bufferapp.com/oauth2/authorize?client_id=${bufferClientId}&redirect_uri=${encodeURIComponent(bufferRedirectUri)}&response_type=code`)}
-          >
-            Add to Buffer
-          </button>
+          <form className={styles.form} onSubmit={this.onSubmit}>
+            <div className={styles.formInput}>
+              <input
+                type="text"
+                placeholder="Twitter username"
+                className={styles.input}
+                onChange={(event) => this.setState({ twitterUsername: event.target.value })}
+              />
+            </div>
+
+            <div className={styles.formButton}>
+              <button
+                type="submit"
+                className={styles.button}
+              >
+                Add to Buffer
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     );

@@ -30,6 +30,27 @@
   margin-top: 0.5rem;
 }
 
+.form {
+  composes: row from 'styles/grid.css';
+}
+
+.formInput,
+.formButton {
+  composes: column from 'styles/grid.css';
+}
+
+.formInput {
+  width: 66.6666667%;
+}
+
+.formButton {
+  width: 33.3333333%;
+}
+
+.input {
+  composes: input from 'styles/form.css';
+}
+
 .button {
   composes: button from 'styles/button.css';
 }

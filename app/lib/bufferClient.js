@@ -19,7 +19,7 @@ module.exports.getAccessToken = function getAccessToken (request_token, callback
   });
 };
 
-module.exports.getTwitterProfiles = function getTwitterProfiles (accessToken) {
+module.exports.getTwitterProfile = function getTwitterProfile (accessToken, username, callback) {
   var options = {
     url: 'https://api.bufferapp.com/1/profiles.json?access_token=' + accessToken
   };
@@ -38,19 +38,19 @@ module.exports.getTwitterProfiles = function getTwitterProfiles (accessToken) {
         ]);
       });
 
-    callback(null, twitterProfiles);
+    callback(null, _.find(twitterProfiles, {
+      service_username: username
+    }));
   });
 };
 
-module.exports.addItemsToQueue = function addItemsToQueue (accessToken, tweets, done) {
+module.exports.addItemsToQueue = function addItemsToQueue (accessToken, profile_id, tweets, done) {
   async.eachSeries(
     tweets,
     function (tweet, callback) {
       var data = {
         text: tweet.content,
-
-        // TODO: should be configurable
-        'profile_ids[]': '57875657b0caf446262cea24'
+        'profile_ids[]': profile_id
       };
 
       if (tweet.image) {
@@ -66,7 +66,7 @@ module.exports.addItemsToQueue = function addItemsToQueue (accessToken, tweets, 
         var data = JSON.parse(body);
 
         if (data.success !== true) {
-          callback(data.error || data.message);
+          callback(new Error(data.error || data.message));
           return;
         }
 
