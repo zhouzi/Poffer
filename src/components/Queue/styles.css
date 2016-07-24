@@ -1,7 +1,6 @@
 @import 'styles/variables.css';
 
 .container {
-  composes: sectionBackground from 'styles/grid.css';
 }
 
 .inner {
@@ -13,7 +12,7 @@
 }
 
 .tweet {
-  background-color: #fff;
+  background-color: #eee;
   padding: 1rem;
   border-radius: var(--borderRadius);
   margin-bottom: 1rem;
