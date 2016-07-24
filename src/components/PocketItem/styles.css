@@ -6,24 +6,33 @@
   background-color: var(--colorPrimary);
   font-size: 1.2rem;
   border-radius: 4px;
-  padding: 1rem 1rem 1rem 2rem;
+  padding: 1rem 1rem 1.5rem 1rem;
   margin-bottom: 1rem;
 }
 
-.itemOpenLink {
-  display: block;
+.actions {
+  composes: listUnstyled from 'styles/list.css';
+  display: flex;
   position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  background-color: var(--colorSecondary);
-  width: 40px;
-  height: 40px;
+  bottom: 0;
+  left: 1rem;
+  transform: translateY(0.5rem);
+}
+
+.actionsItem {
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+
+.action {
+  composes: button from 'styles/button.css';
+  position: relative;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
 }
 
-.itemOpenLink [class^="icon-"] {
+.action [class^="icon-"] {
   position: absolute;
   top: 50%;
   left: 50%;

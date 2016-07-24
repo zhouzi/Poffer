@@ -12,6 +12,7 @@ export default class PocketItem extends Component {
     item: PropTypes.object.isRequired,
     tweetTimes: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
   };
 
   state = {
@@ -36,6 +37,12 @@ export default class PocketItem extends Component {
     });
   };
 
+  onDelete = () => {
+    if (confirm('Are you sure you want to ignore this item? You won\'t find it anymore on Poffer.')) {
+      this.props.onDelete();
+    }
+  };
+
   render () {
     const { item, tweetTimes } = this.props;
 
@@ -44,9 +51,27 @@ export default class PocketItem extends Component {
         <div className={styles.item}>
           {item.resolved_title}
 
-          <a href={item.resolved_url} target="_blank" className={styles.itemOpenLink}>
-            <span className="icon-external-link" />
-          </a>
+          <ul className={styles.actions}>
+            <li className={styles.actionsItem}>
+              <a
+                href={item.resolved_url}
+                target="_blank"
+                className={styles.action}
+              >
+                <span className="icon-external-link" />
+              </a>
+            </li>
+
+            <li className={styles.actionsItem}>
+              <button
+                type="button"
+                className={styles.action}
+                onClick={this.onDelete}
+              >
+                <span className="icon-cross" />
+              </button>
+            </li>
+          </ul>
         </div>
 
         {times(tweetTimes, (index) => (

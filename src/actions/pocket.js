@@ -6,7 +6,15 @@ export function fetchItems (tag) {
       .fetch(`/api/pocket/retrieve?request_token=${request_token}&tag=${tag}`, {
         method: 'GET'
       })
-      .then((res) => res.json())
+      .then((res) => {
+        const email = res.headers.get('User-Email');
+
+        if (email) {
+          dispatch(fetchUserSuccess(email));
+        }
+
+        return res.json();
+      })
       .then((items) => dispatch(fetchItemsSuccess(items)));
   };
 }
@@ -17,5 +25,41 @@ function fetchItemsSuccess (items) {
   return {
     type: POCKET_FETCH_ITEMS_SUCCESS,
     payload: items
+  };
+}
+
+export function fetchDeleteItem (item) {
+  return (dispatch, getState) => {
+    const { email } = getState();
+
+    if (email == null) {
+      alert('Oops, that\'s a VIP feature :/');
+      return;
+    }
+
+    dispatch(fetchDeleteItemSuccess(item));
+
+    window
+      .fetch(`/api/pocket/delete/${item.item_id}?email=${email}`, {
+        method: 'POST'
+      });
+  };
+}
+
+export const POCKET_FETCH_DELETE_ITEM_SUCCESS = 'POCKET_FETCH_DELETE_ITEM_SUCCESS';
+
+function fetchDeleteItemSuccess (item) {
+  return {
+    type: POCKET_FETCH_DELETE_ITEM_SUCCESS,
+    payload: item
+  };
+}
+
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
+
+function fetchUserSuccess (email) {
+  return {
+    type: FETCH_USER_SUCCESS,
+    payload: email
   };
 }

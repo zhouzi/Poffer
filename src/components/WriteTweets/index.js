@@ -11,6 +11,7 @@ export default class WriteTweets extends Component {
     items: PropTypes.object,
     tweetTimes: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
   };
 
   render () {
@@ -32,6 +33,7 @@ export default class WriteTweets extends Component {
                   item={item}
                   tweetTimes={this.props.tweetTimes}
                   onChange={this.props.onChange}
+                  onDelete={() => this.props.onDelete(item)}
                 />
               </li>
             ))}

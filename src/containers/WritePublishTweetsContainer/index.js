@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import WriteTweets from 'components/WriteTweets';
 import Queue from 'components/Queue';
 import { fetchAddToQueue } from 'actions/buffer';
+import { fetchDeleteItem as fetchDeletePocketItem } from 'actions/pocket';
 
 class WritePublishTweets extends Component {
   state = {
@@ -34,6 +35,7 @@ class WritePublishTweets extends Component {
           items={items}
           tweetTimes={tweetTimes}
           onChange={this.onTweetsChange}
+          onDelete={this.props.onDeletePocketItem}
         />
 
         <Queue
@@ -59,6 +61,7 @@ function mapStateToProps ({ items, tweetTimes, accounts }) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     onPublish: fetchAddToQueue,
+    onDeletePocketItem: fetchDeletePocketItem,
   }, dispatch);
 }
 

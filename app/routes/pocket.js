@@ -44,14 +44,14 @@ router.get('/retrieve', function (req, res) {
           }, function (err, tweets) {
             if (err) {
               // swallow errors at this point
-              callback(null, items);
+              callback(null, items, user.email);
               return;
             }
 
             if (tweets.length === 0) {
               // return early to avoid going through .pickBy
               // which could be expensive if there are lots of items
-              callback(null, items);
+              callback(null, items, user.email);
               return;
             }
 
@@ -61,11 +61,11 @@ router.get('/retrieve', function (req, res) {
 
             callback(null, _.pickBy(items, function (item) {
               return tweetsPocketItems.indexOf(item.item_id) < 0;
-            }));
+            }), user.email);
           });
         });
       }
-    ], function (err, items) {
+    ], function (err, items, email) {
       if (err) {
         res.statusCode = 500;
         res.json({
@@ -75,7 +75,72 @@ router.get('/retrieve', function (req, res) {
         return;
       }
 
+      if (email) {
+        res.set('User-Email', email);
+      }
+
       res.json(items);
+    });
+});
+
+router.post('/delete/:pocket_item_id', function (req, res) {
+  var pocket_item_id = req.params.pocket_item_id;
+
+  if (!pocket_item_id) {
+    res.statusCode = 400;
+    res.json({
+      status: 'error',
+      message: 'pocket item id missing'
+    });
+    return;
+  }
+
+  var email = req.query.email;
+
+  if (!email) {
+    res.statusCode = 400;
+    res.json({
+      status: 'error',
+      message: 'user email missing'
+    });
+    return;
+  }
+
+  async
+    .waterfall([
+      function (callback) {
+        User.findOne({
+          email: email
+        }, callback);
+      },
+      function (user, callback) {
+        if (user == null) {
+          callback(new Error('user not found'));
+          return;
+        }
+
+        callback(null, user);
+      },
+      function (user, callback) {
+        new Tweet({
+          content: '',
+          pocket_item_id: pocket_item_id,
+          owner_id: user._id
+        }).save(callback);
+      }
+    ], function (err) {
+      if (err) {
+        res.statusCode = 500;
+        res.json({
+          status: 'error',
+          message: err.message
+        });
+        return;
+      }
+
+      res.json({
+        status: 'ok'
+      });
     });
 });
 
