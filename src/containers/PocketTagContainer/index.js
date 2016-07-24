@@ -3,19 +3,38 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchItems } from 'actions/pocket';
 import styles from './styles.css';
+import openPopup from 'lib/openPopup';
 
 export default class PocketTagContainer extends Component {
   static propTypes = {
-    onTagSelected: PropTypes.func.isRequired
+    onTagSelected: PropTypes.func.isRequired,
+    pocketRequestToken: PropTypes.string.isRequired,
+    pocketRedirectUri: PropTypes.string.isRequired,
   };
 
   state = {
     value: ''
   };
 
+  onMessage = (message) => {
+    if (message.data === 'poffer:pocket:auth') {
+      this.props.onTagSelected(this.state.value);
+    }
+  };
+
+  componentDidMount () {
+    window.addEventListener('message', this.onMessage);
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('message', this.onMessage);
+  }
+
   onSubmit = (event) => {
     event.preventDefault();
-    this.props.onTagSelected(this.state.value);
+
+    const { pocketRequestToken, pocketRedirectUri } = this.props;
+    openPopup(`https://getpocket.com/auth/authorize?request_token=${pocketRequestToken}&redirect_uri=${pocketRedirectUri}`);
   };
 
   render () {
@@ -53,10 +72,17 @@ export default class PocketTagContainer extends Component {
   }
 }
 
+function mapStateToProps ({ accounts }) {
+  return {
+    pocketRequestToken: accounts.pocket.request_token,
+    pocketRedirectUri: accounts.pocket.redirect_uri,
+  };
+}
+
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     onTagSelected: fetchItems,
   }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(PocketTagContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(PocketTagContainer);
