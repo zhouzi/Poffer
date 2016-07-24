@@ -33,7 +33,7 @@ module.exports.getAccessToken = function getAccessToken (request_token, callback
   });
 
   request.post(options, function (error, response, body) {
-    callback(null, JSON.parse(body).access_token);
+    callback(null, JSON.parse(body));
   });
 };
 
