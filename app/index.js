@@ -81,11 +81,9 @@ app.get('/buffer/callback', function (req, res) {
 
 app.use(function (req, res) {
   res.statusCode = 404;
-
   res.json({
     status: 'error',
-    code: 404,
-    message: 'Page not found'
+    message: 'not found'
   });
 });
 
