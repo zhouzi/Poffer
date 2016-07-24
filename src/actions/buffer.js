@@ -9,6 +9,13 @@ export function authSuccess (request_token) {
 
 export function fetchAddToQueue (code, queue) {
   return (dispatch) => {
-    console.log(code, queue);
+    window
+      .fetch(`/api/buffer/add?request_token=${code}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(queue),
+      });
   };
 }

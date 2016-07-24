@@ -36,6 +36,9 @@ app.get('/status', function (req, res) {
   });
 });
 
+var bufferRoute = require('./routes/buffer');
+app.use('/api/buffer', bufferRoute);
+
 var pocketRoute = require('./routes/pocket');
 app.use('/api/pocket', pocketRoute);
 
