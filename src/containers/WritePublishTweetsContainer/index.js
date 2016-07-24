@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import WriteTweets from 'components/WriteTweets';
 import Queue from 'components/Queue';
+import { fetchAddToQueue } from 'actions/buffer';
 
 class WritePublishTweets extends Component {
   state = {
@@ -18,7 +20,13 @@ class WritePublishTweets extends Component {
   };
 
   render () {
-    const { items, tweetTimes } = this.props;
+    const {
+      items,
+      tweetTimes,
+      bufferClientId,
+      bufferRedirectUri,
+      onPublish
+      } = this.props;
 
     return (
       <div>
@@ -30,17 +38,28 @@ class WritePublishTweets extends Component {
 
         <Queue
           tweets={this.state.tweets}
+          bufferClientId={bufferClientId}
+          bufferRedirectUri={bufferRedirectUri}
+          onPublish={onPublish}
         />
       </div>
     );
   }
 }
 
-function mapStateToProps ({ items, tweetTimes }) {
+function mapStateToProps ({ items, tweetTimes, accounts }) {
   return {
     items,
     tweetTimes,
+    bufferClientId: accounts.buffer.client_id,
+    bufferRedirectUri: accounts.buffer.redirect_uri,
   };
 }
 
-export default connect(mapStateToProps, null)(WritePublishTweets);
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    onPublish: fetchAddToQueue,
+  }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WritePublishTweets);

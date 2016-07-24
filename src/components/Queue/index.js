@@ -3,10 +3,14 @@ import styles from './styles.css';
 import reduce from 'lodash/reduce';
 import values from 'lodash/values';
 import times from 'lodash/times';
+import openPopup from 'lib/openPopup';
 
 export default class Queue extends Component {
   static propTypes = {
-    tweets: PropTypes.object.isRequired
+    tweets: PropTypes.object.isRequired,
+    bufferClientId: PropTypes.string.isRequired,
+    bufferRedirectUri: PropTypes.string.isRequired,
+    onPublish: PropTypes.func.isRequired,
   };
 
   constructor (props) {
@@ -15,6 +19,25 @@ export default class Queue extends Component {
     this.state = {
       queue: this.getOrderedList(props.tweets)
     };
+  }
+
+  onMessage = (message) => {
+    if (typeof message.data !== 'string') {
+      return;
+    }
+
+    if (message.data.indexOf('poffer:buffer:auth') === 0) {
+      const code = message.data.replace('poffer:buffer:auth:', '');
+      this.props.onPublish(code, this.state.queue);
+    }
+  };
+
+  componentDidMount () {
+    window.addEventListener('message', this.onMessage);
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('message', this.onMessage);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -93,6 +116,8 @@ export default class Queue extends Component {
   };
 
   render () {
+    const { bufferClientId, bufferRedirectUri } = this.props;
+
     return (
       <div className={styles.container}>
         <div className={styles.inner}>
@@ -119,7 +144,11 @@ export default class Queue extends Component {
             </div>
           ))}
 
-          <button type="button" className={styles.button}>
+          <button
+            type="button"
+            className={styles.button}
+            onClick={() => openPopup(`https://bufferapp.com/oauth2/authorize?client_id=${bufferClientId}&redirect_uri=${encodeURIComponent(bufferRedirectUri)}&response_type=code`)}
+          >
             Add to Buffer
           </button>
         </div>

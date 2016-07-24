@@ -6,3 +6,9 @@ export function authSuccess (request_token) {
     payload: request_token
   };
 }
+
+export function fetchAddToQueue (code, queue) {
+  return (dispatch) => {
+    console.log(code, queue);
+  };
+}
