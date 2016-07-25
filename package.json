@@ -37,6 +37,7 @@
     "express": "4.14.0",
     "jade": "1.11.0",
     "lodash": "4.13.1",
-    "mongoose": "4.5.5"
+    "mongoose": "4.5.5",
+    "request": "2.74.0"
   }
 }
