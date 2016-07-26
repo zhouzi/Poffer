@@ -87,6 +87,10 @@ app.use(function (req, res) {
   });
 });
 
+process.on('uncaughtException', function (err) {
+  console.error(err);
+});
+
 var PORT = process.env.PORT || '1234';
 app.listen(PORT, function () {
   console.log('Listening to ' + PORT);
