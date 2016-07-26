@@ -88,7 +88,6 @@ app.use(function (req, res) {
 });
 
 var PORT = process.env.PORT || '1234';
-var IP = process.env.IP || 'localhost';
-app.listen(PORT, IP, function () {
-  console.log('Listening to ' + IP + ":" + PORT);
+app.listen(PORT, function () {
+  console.log('Listening to ' + PORT);
 });
