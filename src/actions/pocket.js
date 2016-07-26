@@ -33,7 +33,11 @@ export function fetchDeleteItem (item) {
     const { email } = getState();
 
     if (email == null) {
-      alert('Oops, that\'s a VIP feature :/');
+      alert(
+        'Ignoring items is a feature that requires storage and thus costs.' +
+        'Read more about how you can benefit from it:\n\n' +
+        'https://github.com/Zhouzi/Poffer'
+      );
       return;
     }
 
