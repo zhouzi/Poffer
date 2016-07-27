@@ -1,6 +1,16 @@
+import { updateStatus } from './status';
+
 export function fetchItems (tag) {
   return (dispatch, getState) => {
-    const { request_token } = getState().accounts.pocket;
+    const state = getState();
+
+    if (state.status.fetchItems === 'loading') {
+      return;
+    }
+
+    const { request_token } = state.accounts.pocket;
+
+    dispatch(updateStatus('fetchItems', 'loading'));
 
     window
       .fetch(`/api/pocket/retrieve?request_token=${request_token}&tag=${tag}`, {
@@ -15,7 +25,10 @@ export function fetchItems (tag) {
 
         return res.json();
       })
-      .then((items) => dispatch(fetchItemsSuccess(items)));
+      .then((items) => dispatch(fetchItemsSuccess(items)))
+      .then(() => {
+        dispatch(updateStatus('fetchItems', 'ready'));
+      });
   };
 }
 

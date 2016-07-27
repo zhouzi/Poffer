@@ -11,6 +11,7 @@ export default class Queue extends Component {
     bufferClientId: PropTypes.string.isRequired,
     bufferRedirectUri: PropTypes.string.isRequired,
     onPublish: PropTypes.func.isRequired,
+    isAddingToBuffer: PropTypes.bool.isRequired,
   };
 
   constructor (props) {
@@ -124,6 +125,8 @@ export default class Queue extends Component {
   };
 
   render () {
+    const { isAddingToBuffer } = this.props;
+
     return (
       <div className={styles.container}>
         <div className={styles.inner}>
@@ -165,8 +168,9 @@ export default class Queue extends Component {
               <button
                 type="submit"
                 className={styles.button}
+                disabled={isAddingToBuffer}
               >
-                Add to Buffer
+                {isAddingToBuffer ? 'Loading...' : 'Add to Buffer'}
               </button>
             </div>
           </form>

@@ -26,7 +26,8 @@ class WritePublishTweets extends Component {
       tweetTimes,
       bufferClientId,
       bufferRedirectUri,
-      onPublish
+      onPublish,
+      isAddingToBuffer
       } = this.props;
 
     return (
@@ -43,18 +44,20 @@ class WritePublishTweets extends Component {
           bufferClientId={bufferClientId}
           bufferRedirectUri={bufferRedirectUri}
           onPublish={onPublish}
+          isAddingToBuffer={isAddingToBuffer}
         />
       </div>
     );
   }
 }
 
-function mapStateToProps ({ items, tweetTimes, accounts }) {
+function mapStateToProps ({ items, tweetTimes, accounts, status }) {
   return {
     items,
     tweetTimes,
     bufferClientId: accounts.buffer.client_id,
     bufferRedirectUri: accounts.buffer.redirect_uri,
+    isAddingToBuffer: status.addToBufferQueue === 'loading',
   };
 }
 

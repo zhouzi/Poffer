@@ -38,6 +38,8 @@ export default class PocketTagContainer extends Component {
   };
 
   render () {
+    const { isFetchingItems } = this.props;
+
     return (
       <div className={styles.container}>
         <div className={styles.inner}>
@@ -61,8 +63,12 @@ export default class PocketTagContainer extends Component {
             </div>
 
             <div className={styles.formButton}>
-              <button type="submit" className={styles.button}>
-                Next
+              <button
+                type="submit"
+                className={styles.button}
+                disabled={isFetchingItems}
+              >
+                {isFetchingItems ? 'Loading...' : 'Next'}
               </button>
             </div>
           </form>
@@ -72,10 +78,11 @@ export default class PocketTagContainer extends Component {
   }
 }
 
-function mapStateToProps ({ accounts }) {
+function mapStateToProps ({ accounts, status }) {
   return {
     pocketRequestToken: accounts.pocket.request_token,
     pocketRedirectUri: accounts.pocket.redirect_uri,
+    isFetchingItems: status.fetchItems === 'loading',
   };
 }
 
