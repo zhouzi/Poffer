@@ -1,5 +1,6 @@
 var router = require('express').Router();
 var bufferClient = require('../lib/bufferClient');
+var async = require('async');
 
 router.post('/add', function (req, res) {
   var request_token = decodeURIComponent(req.query.request_token);
@@ -42,17 +43,25 @@ router.post('/add', function (req, res) {
     return;
   }
 
-  bufferClient.getAccessToken(request_token, function (err, accessToken) {
-    if (err) {
-      res.statusCode = 500;
-      res.json({
-        status: 'error',
-        message: err.message
-      });
-      return;
-    }
+  async
+    .waterfall([
+      function (callback) {
+        bufferClient.getAccessToken(request_token, callback);
+      },
+      function (accessToken, callback) {
+        bufferClient.getTwitterProfile(accessToken, twitter_username, function (err, profile) {
+          if (err) {
+            callback(err);
+            return;
+          }
 
-    bufferClient.getTwitterProfile(accessToken, twitter_username, function (err, profile) {
+          callback(null, accessToken, profile.id);
+        });
+      },
+      function (accessToken, profileId, callback) {
+        bufferClient.addItemsToQueue(accessToken, profileId, tweets, callback);
+      }
+    ], function (err) {
       if (err) {
         res.statusCode = 500;
         res.json({
@@ -62,22 +71,10 @@ router.post('/add', function (req, res) {
         return;
       }
 
-      bufferClient.addItemsToQueue(accessToken, profile.id, tweets, function (err) {
-        if (err) {
-          res.statusCode = 500;
-          res.json({
-            status: 'error',
-            message: err.message
-          });
-          return;
-        }
-
-        res.json({
-          status: 'ok'
-        });
+      res.json({
+        status: 'ok'
       });
     });
-  });
 });
 
 module.exports = router;
