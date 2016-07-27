@@ -1,10 +1,14 @@
 var router = require('express').Router();
 var bufferClient = require('../lib/bufferClient');
 var async = require('async');
+var Tweet = require('../models/Tweet');
+var bugsnag = require('bugsnag');
+var User = require('../models/User');
 
 router.post('/add', function (req, res) {
   var request_token = decodeURIComponent(req.query.request_token);
   var twitter_username = decodeURIComponent(req.query.twitter_username);
+  var ownerEmail = decodeURIComponent(req.query.email);
   var tweets = req.body;
 
   if (!request_token) {
@@ -59,7 +63,7 @@ router.post('/add', function (req, res) {
         });
       },
       function (accessToken, profileId, callback) {
-        bufferClient.addItemsToQueue(accessToken, profileId, tweets, callback);
+        addTweetsToBufferQueueAndIgnorePocketItem(accessToken, profileId, tweets, ownerEmail, callback);
       }
     ], function (err) {
       if (err) {
@@ -76,5 +80,76 @@ router.post('/add', function (req, res) {
       });
     });
 });
+
+function addTweetsToBufferQueueAndIgnorePocketItem (accessToken, profileId, tweets, ownerEmail, callback) {
+  async.waterfall([
+    function (next) {
+      getUserByEmail(ownerEmail, function (err, result) {
+        if (err) {
+          // swallow errors
+          bugsnag.notify(err);
+        }
+
+        next(null, result);
+      });
+    },
+    function (user, next) {
+      addTweetsToBufferQueue(accessToken, profileId, tweets, user ? user._id : null, next)
+    }
+  ], callback);
+}
+
+function getUserByEmail (email, callback) {
+  if (email == null) {
+    callback();
+    return;
+  }
+
+  User.findOne({
+    email: email
+  }, function (err, result) {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    callback(null, result);
+  });
+}
+
+function addTweetsToBufferQueue (accessToken, profileId, tweets, ownerId, done) {
+  async.eachSeries(
+    tweets,
+    function (tweet, callback) {
+      bufferClient.addItemToQueue(accessToken, profileId, tweet, function (err) {
+        if (err) {
+          callback(err);
+          return;
+        }
+
+        if (ownerId == null) {
+          callback();
+          return;
+        }
+
+        new Tweet({
+          content: tweet.content,
+          image: tweet.image || '',
+          pocket_item_id: tweet.pocketId,
+          owner_id: ownerId
+        }).save(function (err) {
+          if (err) {
+            // do not stop execution at this point
+            // for a database error
+            bugsnag.notify(err);
+          }
+
+          callback();
+        });
+      });
+    },
+    done
+  );
+}
 
 module.exports = router;

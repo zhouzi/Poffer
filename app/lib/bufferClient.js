@@ -44,42 +44,29 @@ module.exports.getTwitterProfile = function getTwitterProfile (accessToken, user
   });
 };
 
-module.exports.addItemsToQueue = function addItemsToQueue (accessToken, profile_id, tweets, done) {
-  async.eachSeries(
-    tweets,
-    function (tweet, callback) {
-      var data = {
-        text: tweet.content,
-        'profile_ids[]': profile_id
-      };
+module.exports.addItemToQueue = function addItemToQueue (accessToken, profile_id, tweet, callback) {
+  var data = {
+    text: tweet.content,
+    'profile_ids[]': profile_id
+  };
 
-      if (tweet.image) {
-        data['media[photo]'] = tweet.image;
-      }
+  if (tweet.image) {
+    data['media[photo]'] = tweet.image;
+  }
 
-      var options = {
-        formData: data,
-        url: 'https://api.bufferapp.com/1/updates/create.json?access_token=' + accessToken
-      };
+  var options = {
+    formData: data,
+    url: 'https://api.bufferapp.com/1/updates/create.json?access_token=' + accessToken
+  };
 
-      request.post(options, function (err, res, body) {
-        var data = JSON.parse(body);
+  request.post(options, function (err, res, body) {
+    var data = JSON.parse(body);
 
-        if (data.success !== true) {
-          callback(new Error(data.error || data.message));
-          return;
-        }
-
-        callback();
-      });
-    },
-    function (err) {
-      if (err) {
-        done(err);
-        return;
-      }
-
-      done();
+    if (data.success !== true) {
+      callback(new Error(data.error || data.message));
+      return;
     }
-  );
+
+    callback();
+  });
 };

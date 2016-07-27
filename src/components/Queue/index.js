@@ -157,6 +157,7 @@ export default class Queue extends Component {
                 placeholder="Twitter username"
                 className={styles.input}
                 onChange={(event) => this.setState({ twitterUsername: event.target.value })}
+                required
               />
             </div>
 

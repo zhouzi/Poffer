@@ -23,7 +23,10 @@ export default class PocketItem extends Component {
     this.setState({
       tweets: {
         ...this.state.tweets,
-        [index]: value
+        [index]: {
+          ...value,
+          pocketId: this.props.item.item_id
+        }
       }
     }, () => {
       const notEmptyTweets = pickBy(this.state.tweets, (tweet) => tweet.content);
