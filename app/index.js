@@ -87,9 +87,15 @@ app.use(function (req, res) {
   });
 });
 
-process.on('uncaughtException', function (err) {
-  console.error(err);
-});
+if (process.env.BUGSNAG_API_KEY) {
+  var bugsnag = require('bugsnag');
+  bugsnag.register(process.env.BUGSNAG_API_KEY, {
+    releaseStage: process.env.NODE_ENV || 'development',
+    onUncaughtError: function (err) {
+      console.error(err.stack || err);
+    }
+  });
+}
 
 var PORT = process.env.PORT || '1234';
 app.listen(PORT, function () {
