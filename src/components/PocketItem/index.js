@@ -2,10 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import styles from './styles.css';
 import times from 'lodash/times';
 import TweetEditor from 'components/TweetEditor';
-import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
-import mapValues from 'lodash/mapValues';
-import identity from 'lodash/identity';
 
 export default class PocketItem extends Component {
   static propTypes = {
@@ -29,10 +26,7 @@ export default class PocketItem extends Component {
         }
       }
     }, () => {
-      const notEmptyTweets = pickBy(this.state.tweets, (tweet) => tweet.content);
-
-      // remove empty props such as { image: '' }
-      const tweets = mapValues(notEmptyTweets, (tweet) => pickBy(tweet, identity));
+      const tweets = pickBy(this.state.tweets, (tweet) => tweet.content);
 
       this.props.onChange({
         [this.props.item.item_id]: tweets

@@ -4,6 +4,12 @@ import reduce from 'lodash/reduce';
 import values from 'lodash/values';
 import times from 'lodash/times';
 import openPopup from 'lib/openPopup';
+import mapKeys from 'lodash/mapKeys';
+import TweetEditor from 'components/TweetEditor';
+import assign from 'lodash/assign';
+import pickBy from 'lodash/pickBy';
+import omit from 'lodash/omit';
+import identity from 'lodash/identity';
 
 export default class Queue extends Component {
   static propTypes = {
@@ -20,6 +26,7 @@ export default class Queue extends Component {
     this.state = {
       queue: this.getOrderedList(props.tweets),
       twitterUsername: '',
+      customTweets: {},
     };
   }
 
@@ -30,7 +37,18 @@ export default class Queue extends Component {
 
     if (message.data.indexOf('poffer:buffer:auth') === 0) {
       const code = message.data.replace('poffer:buffer:auth:', '');
-      this.props.onPublish(code, this.state.twitterUsername, this.state.queue);
+
+      const queue = this.state.queue
+        // remove empty tweets
+        .filter((tweet) => tweet.content)
+
+        // remove state-specific props
+        .map((tweet) => omit(tweet, ['$isCustom']))
+
+        // strip empty props such as { image: '' }
+        .map((tweet) => pickBy(tweet, identity));
+
+      this.props.onPublish(code, this.state.twitterUsername, queue);
     }
   };
 
@@ -44,11 +62,66 @@ export default class Queue extends Component {
 
   componentWillReceiveProps (nextProps) {
     this.setState({
-      queue: this.getOrderedList(nextProps.tweets)
+      queue: this.getOrderedList(nextProps.tweets, this.state.customTweets)
     });
   }
 
-  getOrderedList = (tweets) => {
+  addCustomTweetAt = (index) => {
+    // when adding a new tweet at a given index
+    // we need to update all indexes
+    // for example, adding a tweet at index 2 means
+    // the previous index 2 becomes index 3
+    // but anything that's before 2 doesn't change
+    const customTweets = mapKeys(this.state.customTweets, (tweet, tweetIndex) => {
+      tweetIndex = Number(tweetIndex);
+
+      if (tweetIndex < index) {
+        return tweetIndex;
+      }
+
+      return tweetIndex + 1
+    });
+
+    // now that all index are updated
+    // we know the given index is free
+    customTweets[index] = {
+      $isCustom: true,
+      content: '',
+      image: '',
+    };
+
+    const queue = this.getOrderedList(this.props.tweets, customTweets);
+
+    this.setState({
+      customTweets,
+      queue,
+    });
+  };
+
+  getOrderedList = (tweets, customTweets = {}) => {
+    const orderedTweets = this.getOrderedTweets(tweets);
+
+    // add back the custom tweets to the ordered queue
+    Object.keys(customTweets).sort().forEach((index) => {
+      index = Number(index);
+
+      const customTweet = customTweets[index];
+
+      // if the queue is long enough to insert
+      // the custom tweet in between then do it
+      if (orderedTweets.length > index) {
+        orderedTweets.splice(index + 1, 0, customTweet);
+        return;
+      }
+
+      // but otherwise just add it at the end
+      orderedTweets.push(customTweet);
+    });
+
+    return orderedTweets;
+  };
+
+  getOrderedTweets = (tweets) => {
     // turns a complex map into an array of arrays, e.g:
     // {
     //   abc: {
@@ -139,19 +212,54 @@ export default class Queue extends Component {
           </p>
 
           {this.state.queue.map((tweet, index) => (
-            <div key={index} className={styles.tweet}>
-              <div className={styles.tweetContent}>
-                {tweet.content}
+            <div key={index} className={styles.queueItem}>
+              <div className={styles.addTweetBlock}>
+                <button
+                  type="button"
+                  onClick={() => this.addCustomTweetAt(index - 1)}
+                  className={styles.addTweetButton}
+                >
+                  <span className="icon-plus" />
+                  Add Tweet
+                </button>
               </div>
 
-              {tweet.image ? (
-                <div
-                  className={styles.tweetImage}
-                  style={{ backgroundImage: `url('${tweet.image}')` }}
-                ></div>
-              ) : null}
+              {tweet.$isCustom
+                ?
+                (
+                  <TweetEditor onChange={(value) => assign(tweet, value)} />
+                )
+                :
+                (
+                  <div className={styles.tweet}>
+                    <div className={styles.tweetContent}>
+                      {tweet.content}
+                    </div>
+
+                    {tweet.image ? (
+                      <div
+                        className={styles.tweetImage}
+                        style={{ backgroundImage: `url('${tweet.image}')` }}
+                      ></div>
+                    ) : null}
+                  </div>
+                )
+              }
             </div>
           ))}
+
+          <div className={styles.queueItem}>
+            <div className={styles.addTweetBlock}>
+              <button
+                type="button"
+                onClick={() => this.addCustomTweetAt(this.state.queue.length)}
+                className={styles.addTweetButton}
+              >
+                <span className="icon-plus" />
+                Add Tweet
+              </button>
+            </div>
+          </div>
 
           <form className={styles.form} onSubmit={this.onSubmit}>
             <div className={styles.formInput}>

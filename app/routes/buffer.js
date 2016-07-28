@@ -127,6 +127,12 @@ function addTweetsToBufferQueue (accessToken, profileId, tweets, ownerId, done) 
           return;
         }
 
+        // custom tweets do not have a pocket id
+        if (tweet.pocketId == null) {
+          callback();
+          return;
+        }
+
         if (ownerId == null) {
           callback();
           return;

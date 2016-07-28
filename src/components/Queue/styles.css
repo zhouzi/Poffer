@@ -15,7 +15,6 @@
   background-color: #eee;
   padding: 1rem;
   border-radius: var(--borderRadius);
-  margin-bottom: 1rem;
 }
 
 .tweetContent {
@@ -32,6 +31,7 @@
 
 .form {
   composes: row from 'styles/grid.css';
+  margin-top: 1rem;
 }
 
 .formInput,
@@ -53,4 +53,50 @@
 
 .button {
   composes: button from 'styles/button.css';
+}
+
+.queueItem {
+}
+
+.addTweetBlock {
+  position: relative;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.addTweetBlock:before {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  border-bottom: 2px solid #eee;
+  width: 100%;
+}
+
+.addTweetButton {
+  composes: input from 'styles/form.css';
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  width: auto;
+  color: #eee;
+  background-color: #fff;
+  padding: 0.2rem 0.6rem;
+  border-color: #eee;
+  border-radius: 80px;
+}
+
+.addTweetButton:focus,
+.addTweetButton:hover {
+  color: inherit;
+  background-color: #eee;
+}
+
+.addTweetButton [class^="icon-"] {
+  margin-right: 0.2rem;
 }
