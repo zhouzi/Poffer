@@ -59,6 +59,11 @@ router.post('/add', function (req, res) {
             return;
           }
 
+          if (profile == null) {
+            callback(new Error('The twitter profile "' + twitter_username + '" is not linked to this Buffer account.'));
+            return;
+          }
+
           callback(null, accessToken, profile.id);
         });
       },
