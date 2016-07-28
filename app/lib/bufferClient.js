@@ -1,6 +1,5 @@
 var _ = require('lodash');
 var request = require('request');
-var async = require('async');
 
 module.exports.getAccessToken = function getAccessToken (request_token, callback) {
   var options = {
@@ -38,8 +37,8 @@ module.exports.getTwitterProfile = function getTwitterProfile (accessToken, user
         ]);
       });
 
-    callback(null, _.find(twitterProfiles, {
-      service_username: username
+    callback(null, _.find(twitterProfiles, function (twitterProfile) {
+      return twitterProfile.service_username.toLowerCase() === username.toLowerCase();
     }));
   });
 };
