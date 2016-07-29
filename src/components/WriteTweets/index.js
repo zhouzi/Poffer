@@ -5,6 +5,7 @@ import mapValues from 'lodash/mapValues';
 import pick from 'lodash/pick';
 import identity from 'lodash/identity';
 import PocketItem from 'components/PocketItem';
+import Range from 'components/Range';
 
 export default class WriteTweets extends Component {
   static propTypes = {
@@ -12,6 +13,7 @@ export default class WriteTweets extends Component {
     tweetTimes: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    onTweetTimesChange: PropTypes.func.isRequired,
   };
 
   render () {
@@ -24,6 +26,12 @@ export default class WriteTweets extends Component {
 
           <p>
             How many times would you like to share the same content?
+
+            <Range
+              onChange={(value) => this.props.onTweetTimesChange(value)}
+              value={this.props.tweetTimes}
+              max={5}
+            />
           </p>
 
           <ul className={styles.list}>

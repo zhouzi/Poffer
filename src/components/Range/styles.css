@@ -1,0 +1,41 @@
+@import 'styles/variables.css';
+
+.container {
+  margin-left: 0.4rem;
+  background-color: #fff;
+  border-radius: 50px;
+}
+
+.container,
+.buttonDecrease,
+.value,
+.buttonIncrease {
+  display: inline-block;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.buttonDecrease,
+.buttonIncrease {
+  composes: button from 'styles/button.css';
+  padding: 0 0.2rem;
+}
+
+.buttonDecrease [class^="icon-"],
+.buttonIncrease [class^="icon-"] {
+  margin-right: 0;
+}
+
+.buttonDecrease {
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+.value {
+  padding: 0 0.4rem;
+}
+
+.buttonIncrease {
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}

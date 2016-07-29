@@ -5,6 +5,7 @@ import WriteTweets from 'components/WriteTweets';
 import Queue from 'components/Queue';
 import { fetchAddToQueue } from 'actions/buffer';
 import { fetchDeleteItem as fetchDeletePocketItem } from 'actions/pocket';
+import { update as updateTweetTimes } from 'actions/tweetTimes';
 
 class WritePublishTweets extends Component {
   state = {
@@ -37,6 +38,7 @@ class WritePublishTweets extends Component {
           tweetTimes={tweetTimes}
           onChange={this.onTweetsChange}
           onDelete={this.props.onDeletePocketItem}
+          onTweetTimesChange={this.props.onTweetTimesChange}
         />
 
         <Queue
@@ -65,6 +67,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     onPublish: fetchAddToQueue,
     onDeletePocketItem: fetchDeletePocketItem,
+    onTweetTimesChange: updateTweetTimes,
   }, dispatch);
 }
 
