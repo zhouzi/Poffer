@@ -29,7 +29,7 @@ export default class PocketItem extends Component {
       const tweets = pickBy(this.state.tweets, (tweet, index) => {
         // drop anything that's above the maximum
         // number of tweets to create
-        if (index <= this.props.tweetTimes) {
+        if (Number(index) >= this.props.tweetTimes) {
           return false;
         }
 
