@@ -3,10 +3,15 @@
 A tool that makes it easier to share the content you like thanks to Pocket+Buffer.
 
 * [Web App](http://poffer.gabinaureche.com)
+* [Demo](#demo)
 * [Motivation](#motivation)
 * [How it works](#how-it-works)
 * [Limitations](#limitations)
 * [Installation](#installation)
+
+## Demo
+
+![Poffer demo screencast](http://g.recordit.co/GLNgo4Pdjd.gif)
 
 ## Motivation
 
