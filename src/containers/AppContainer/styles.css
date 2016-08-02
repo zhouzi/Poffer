@@ -48,3 +48,7 @@ p {
 [class^="icon-"]:before {
   display: block;
 }
+
+small {
+  font-size: 0.8rem;
+}

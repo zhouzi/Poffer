@@ -270,6 +270,7 @@ export default class Queue extends Component {
                 onChange={(event) => this.setState({ twitterUsername: event.target.value })}
                 required
               />
+              <small>Adding the tweets to your Buffer queue may take a while so don't worry :)</small>
             </div>
 
             <div className={styles.formButton}>
