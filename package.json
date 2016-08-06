@@ -28,7 +28,8 @@
     "redux": "3.5.2",
     "redux-thunk": "2.1.0",
     "style-loader": "0.13.1",
-    "twitter-text": "1.14.0"
+    "twitter-text": "1.14.0",
+    "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
     "async": "2.0.1",
