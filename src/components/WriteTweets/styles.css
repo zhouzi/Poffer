@@ -16,6 +16,10 @@
   composes: sectionTitleStep from 'styles/typography.css';
 }
 
+.titleStepActive {
+  composes: sectionTitleStepActive from 'styles/typography.css';
+}
+
 .list {
   composes: listUnstyled from 'styles/list.css';
 }
@@ -24,4 +28,16 @@
   padding-bottom: 1rem;
   margin-bottom: 2rem;
   border-bottom: 2px dotted var(--colorGray);
+}
+
+.tipsContainer {
+  composes: tipsContainer from 'styles/tips.css';
+}
+
+.tipsTitle {
+  composes: tipsTitle from 'styles/tips.css';
+}
+
+.tipsList {
+  composes: tipsList from 'styles/tips.css';
 }

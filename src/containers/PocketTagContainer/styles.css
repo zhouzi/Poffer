@@ -13,6 +13,10 @@
   composes: sectionTitleStep from 'styles/typography.css';
 }
 
+.titleStepActive {
+  composes: sectionTitleStepActive from 'styles/typography.css';
+}
+
 .input {
   composes: input from 'styles/form.css';
 }

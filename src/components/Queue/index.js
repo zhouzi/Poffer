@@ -10,6 +10,7 @@ import assign from 'lodash/assign';
 import pickBy from 'lodash/pickBy';
 import omit from 'lodash/omit';
 import identity from 'lodash/identity';
+import classNames from 'classnames';
 
 export default class Queue extends Component {
   static propTypes = {
@@ -204,89 +205,101 @@ export default class Queue extends Component {
       <div className={styles.container}>
         <div className={styles.inner}>
           <div className={styles.title}>
-            <span className={styles.titleStep}>
+            <span className={classNames({
+              [styles.titleStep]: true,
+              [styles.titleStepActive]: this.state.queue.length > 0,
+            })}>
               3
             </span>
 
             Review Queue
           </div>
 
-          <p>
-            That's the final order that's going to be sent to your Buffer queue.
-          </p>
-
-          {this.state.queue.map((tweet, index) => (
-            <div key={index} className={styles.queueItem}>
-              <div className={styles.addTweetBlock}>
-                <button
-                  type="button"
-                  onClick={() => this.addCustomTweetAt(index - 1)}
-                  className={styles.addTweetButton}
-                >
-                  <span className="icon-plus" />
-                  Add Tweet
-                </button>
+          {this.state.queue.length === 0 ? (
+            <div className={styles.tipsContainer}>
+              <div className={styles.tipsTitle}>
+                The current queue is empty.
               </div>
 
-              {tweet.$isCustom
-                ?
-                (
-                  <TweetEditor onChange={(value) => assign(tweet, value)} />
-                )
-                :
-                (
-                  <div className={styles.tweet}>
-                    <div className={styles.tweetContent}>
-                      {tweet.content}
-                    </div>
+              <ul className={styles.tipsList}>
+                <li>Did you write any tweets about a Pocket item?</li>
+              </ul>
+            </div>
+          ) : (
+            <div>
+              <p>
+                That's the final order that's going to be sent to your Buffer queue.
+              </p>
 
-                    {tweet.image ? (
-                      <div
-                        className={styles.tweetImage}
-                        style={{ backgroundImage: `url('${tweet.image}')` }}
-                      ></div>
-                    ) : null}
+              {this.state.queue.map((tweet, index) => (
+                <div key={index} className={styles.queueItem}>
+                  <div className={styles.addTweetBlock}>
+                    <button
+                      type="button"
+                      onClick={() => this.addCustomTweetAt(index - 1)}
+                      className={styles.addTweetButton}
+                    >
+                      <span className="icon-plus" />
+                      Add Tweet
+                    </button>
                   </div>
-                )
-              }
-            </div>
-          ))}
 
-          <div className={styles.queueItem}>
-            <div className={styles.addTweetBlock}>
-              <button
-                type="button"
-                onClick={() => this.addCustomTweetAt(this.state.queue.length)}
-                className={styles.addTweetButton}
-              >
-                <span className="icon-plus" />
-                Add Tweet
-              </button>
-            </div>
-          </div>
+                  {tweet.$isCustom ? (
+                    <TweetEditor onChange={(value) => assign(tweet, value)} />
+                  ) : (
+                    <div className={styles.tweet}>
+                      <div className={styles.tweetContent}>
+                        {tweet.content}
+                      </div>
 
-          <form className={styles.form} onSubmit={this.onSubmit}>
-            <div className={styles.formInput}>
-              <input
-                type="text"
-                placeholder="Twitter username"
-                className={styles.input}
-                onChange={(event) => this.setState({ twitterUsername: event.target.value })}
-                required
-              />
-              <small>Adding the tweets to your Buffer queue may take a while so don't worry :)</small>
-            </div>
+                      {tweet.image ? (
+                        <div
+                          className={styles.tweetImage}
+                          style={{ backgroundImage: `url('${tweet.image}')` }}
+                        ></div>
+                      ) : null}
+                    </div>
+                  )}
+                </div>
+              ))}
 
-            <div className={styles.formButton}>
-              <button
-                type="submit"
-                className={styles.button}
-                disabled={isAddingToBuffer}
-              >
-                {isAddingToBuffer ? 'Loading...' : 'Add to Buffer'}
-              </button>
+              <div className={styles.queueItem}>
+                <div className={styles.addTweetBlock}>
+                  <button
+                    type="button"
+                    onClick={() => this.addCustomTweetAt(this.state.queue.length)}
+                    className={styles.addTweetButton}
+                  >
+                    <span className="icon-plus" />
+                    Add Tweet
+                  </button>
+                </div>
+              </div>
+
+              <form className={styles.form} onSubmit={this.onSubmit}>
+                <div className={styles.formInput}>
+                  <input
+                    type="text"
+                    placeholder="Twitter username"
+                    className={styles.input}
+                    onChange={(event) => this.setState({ twitterUsername: event.target.value })}
+                    required
+                  />
+                  <small>Adding the tweets to your Buffer queue may take a while so don't worry :)</small>
+                </div>
+
+                <div className={styles.formButton}>
+                  <button
+                    type="submit"
+                    className={styles.button}
+                    disabled={isAddingToBuffer}
+                  >
+                    {isAddingToBuffer ? 'Loading...' : 'Add to Buffer'}
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          )}
         </div>
       </div>
     );

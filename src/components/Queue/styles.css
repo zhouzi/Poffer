@@ -15,6 +15,10 @@
   composes: sectionTitleStep from 'styles/typography.css';
 }
 
+.titleStepActive {
+  composes: sectionTitleStepActive from 'styles/typography.css';
+}
+
 .tweet {
   background-color: #eee;
   padding: 1rem;
@@ -103,4 +107,16 @@
 
 .addTweetButton [class^="icon-"] {
   margin-right: 0.2rem;
+}
+
+.tipsContainer {
+  composes: tipsContainer from 'styles/tips.css';
+}
+
+.tipsTitle {
+  composes: tipsTitle from 'styles/tips.css';
+}
+
+.tipsList {
+  composes: tipsList from 'styles/tips.css';
 }

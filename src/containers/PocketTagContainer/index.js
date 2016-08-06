@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchItems, updateRequestToken } from 'actions/pocket';
 import styles from './styles.css';
 import openPopup from 'lib/openPopup';
+import classNames from 'classnames';
 
 export default class PocketTagContainer extends Component {
   static propTypes = {
@@ -51,7 +52,10 @@ export default class PocketTagContainer extends Component {
       <div className={styles.container}>
         <div className={styles.inner}>
           <div className={styles.title}>
-            <span className={styles.titleStep}>
+            <span className={classNames({
+              [styles.titleStep]: true,
+              [styles.titleStepActive]: true,
+            })}>
               1
             </span>
 
