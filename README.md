@@ -15,13 +15,15 @@ A tool that makes it easier to share the content you like thanks to Pocket+Buffe
 
 ## Motivation
 
-I've always been terrible at Twitter.
+I've always been a terrible Twitter user.
 Despite the fact I often stumble and save content I'd like to share, I always failed to do it.
 I feel like you got to be always connected and have the reflex of tweeting right away.
-I've tried many times but without success so eventually I gave up.
+I've tried many times but without success so I eventually gave up.
 
-I've recently been reading about content strategy, why it's ok/advised to tweet many times the same content and how Buffer can actually help you being a good Twitter citizen.
-I couldn't set up a proper workflow with IFTT/Zapier so I thought I'd build something myself and here it is.
+I've recently been exposed to a few tips, e.g why it's ok/advised to tweet many times the same content and how Buffer can actually help you being a good Twitter citizen.
+I couldn't set up a proper workflow with IFTT/Zapier so I thought I'd build it.
+
+You can read the full story here: [I am a terrible Twitter user so I built a tool to help me out](https://wizbii.tech/i-am-a-terrible-twitter-user-so-i-built-a-tool-to-help-me-out-b757c32c69b5?utm_source=github&utm_medium=readme&utm_campaign=open%20source).
 
 ## How it works
 
