@@ -1,4 +1,21 @@
 .sectionTitle {
+  position: relative;
   font-size: 2rem;
   margin: 0;
+}
+
+.sectionTitleStep {
+  position: absolute;
+  top: 50%;
+  left: -1rem;
+  display: block;
+  transform: translate(-100%, -50%);
+  color: #fff;
+  background-color: #aeb2c9;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  width: 2.4rem;
+  height: 2.4rem;
 }

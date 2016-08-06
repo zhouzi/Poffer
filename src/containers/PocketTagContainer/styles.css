@@ -9,6 +9,10 @@
   composes: sectionTitle from 'styles/typography.css';
 }
 
+.titleStep {
+  composes: sectionTitleStep from 'styles/typography.css';
+}
+
 .input {
   composes: input from 'styles/form.css';
 }

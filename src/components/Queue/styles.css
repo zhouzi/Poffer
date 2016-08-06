@@ -11,6 +11,10 @@
   composes: sectionTitle from 'styles/typography.css';
 }
 
+.titleStep {
+  composes: sectionTitleStep from 'styles/typography.css';
+}
+
 .tweet {
   background-color: #eee;
   padding: 1rem;

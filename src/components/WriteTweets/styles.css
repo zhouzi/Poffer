@@ -12,6 +12,10 @@
   composes: sectionTitle from 'styles/typography.css';
 }
 
+.titleStep {
+  composes: sectionTitleStep from 'styles/typography.css';
+}
+
 .list {
   composes: listUnstyled from 'styles/list.css';
 }

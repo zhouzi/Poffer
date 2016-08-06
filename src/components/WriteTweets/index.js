@@ -21,6 +21,10 @@ export default class WriteTweets extends Component {
       <div className={styles.container}>
         <div className={styles.inner}>
           <div className={styles.title}>
+            <span className={styles.titleStep}>
+              2
+            </span>
+
             Write Tweets
           </div>
 

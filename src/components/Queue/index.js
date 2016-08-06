@@ -204,6 +204,10 @@ export default class Queue extends Component {
       <div className={styles.container}>
         <div className={styles.inner}>
           <div className={styles.title}>
+            <span className={styles.titleStep}>
+              3
+            </span>
+
             Review Queue
           </div>
 
