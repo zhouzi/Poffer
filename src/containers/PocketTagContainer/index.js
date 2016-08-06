@@ -1,15 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchItems } from 'actions/pocket';
+import { fetchItems, updateRequestToken } from 'actions/pocket';
 import styles from './styles.css';
 import openPopup from 'lib/openPopup';
 
 export default class PocketTagContainer extends Component {
   static propTypes = {
     onTagSelected: PropTypes.func.isRequired,
-    pocketRequestToken: PropTypes.string.isRequired,
-    pocketRedirectUri: PropTypes.string.isRequired,
+    onRequestToken: PropTypes.func.isRequired,
   };
 
   state = {
@@ -17,6 +16,16 @@ export default class PocketTagContainer extends Component {
   };
 
   onMessage = (message) => {
+    if (typeof message.data !== 'string') {
+      return;
+    }
+
+    const requestTokenEventPrefix = 'poffer:pocket:request-token:';
+    if (message.data.indexOf(requestTokenEventPrefix) === 0) {
+      const requestToken = message.data.replace(requestTokenEventPrefix, '');
+      this.props.onRequestToken(requestToken);
+    }
+
     if (message.data === 'poffer:pocket:auth') {
       this.props.onTagSelected(this.state.value);
     }
@@ -32,9 +41,7 @@ export default class PocketTagContainer extends Component {
 
   onSubmit = (event) => {
     event.preventDefault();
-
-    const { pocketRequestToken, pocketRedirectUri } = this.props;
-    openPopup(`https://getpocket.com/auth/authorize?request_token=${pocketRequestToken}&redirect_uri=${pocketRedirectUri}`);
+    openPopup('/api/pocket/authorize');
   };
 
   render () {
@@ -68,7 +75,7 @@ export default class PocketTagContainer extends Component {
                 className={styles.button}
                 disabled={isFetchingItems}
               >
-                {isFetchingItems ? 'Loading...' : 'Next'}
+                {isFetchingItems ? 'Loading...' : 'Get Pocket items'}
               </button>
             </div>
           </form>
@@ -78,10 +85,8 @@ export default class PocketTagContainer extends Component {
   }
 }
 
-function mapStateToProps ({ accounts, status }) {
+function mapStateToProps ({ status }) {
   return {
-    pocketRequestToken: accounts.pocket.request_token,
-    pocketRedirectUri: accounts.pocket.redirect_uri,
     isFetchingItems: status.fetchItems === 'loading',
   };
 }
@@ -89,6 +94,7 @@ function mapStateToProps ({ accounts, status }) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     onTagSelected: fetchItems,
+    onRequestToken: updateRequestToken,
   }, dispatch);
 }
 

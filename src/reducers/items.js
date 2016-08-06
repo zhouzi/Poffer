@@ -8,7 +8,10 @@ export default function items (state = null, action) {
       return omitBy(state, (item) => item.item_id === item_id);
 
     case POCKET_FETCH_ITEMS_SUCCESS:
-      return action.payload;
+      return {
+        ...state,
+        ...action.payload,
+      };
 
     default:
       return state;

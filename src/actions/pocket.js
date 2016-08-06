@@ -80,3 +80,12 @@ function fetchUserSuccess (email) {
     payload: email
   };
 }
+
+export const UPDATE_REQUEST_TOKEN = 'UPDATE_REQUEST_TOKEN';
+
+export function updateRequestToken (requestToken) {
+  return {
+    type: UPDATE_REQUEST_TOKEN,
+    payload: requestToken,
+  };
+}

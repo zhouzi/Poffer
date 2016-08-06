@@ -83,6 +83,32 @@ router.get('/retrieve', function (req, res) {
     });
 });
 
+router.get('/authorize', function (req, res) {
+  pocketClient.getRequestToken(function (err, pocketRequestToken) {
+    if (err) {
+      res.statusCode = 500;
+      res.json({
+        status: 'error',
+        message: err.message
+      });
+      return;
+    }
+
+    var baseUrl = 'https://getpocket.com/auth/authorize';
+    var requestToken = 'request_token=' + pocketRequestToken;
+    var redirectUri = 'redirect_uri=' + process.env.POCKET_REDIRECT_URI;
+    var url = baseUrl + '?' + requestToken + '&' + redirectUri;
+
+    // the client needs the request token so we need to:
+    // 1. redirect to a popup that sends the request token to the opener
+    // 2. the popup then makes a redirection to pocket's url
+    res.render('pocket-request-token', {
+      pocketRequestToken: pocketRequestToken,
+      redirectTo: url
+    });
+  });
+});
+
 router.post('/delete/:pocket_item_id', function (req, res) {
   var pocket_item_id = req.params.pocket_item_id;
 
