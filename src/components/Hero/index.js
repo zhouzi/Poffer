@@ -14,12 +14,12 @@ export default function Hero () {
         </div>
 
         <p className={styles.description}>
-          Retrieve your <a href="https://getpocket.com">Pocket</a> links with a given tag, write several tweets per item and add them to your <a href="https://buffer.com">Buffer</a> queue.
-          Poffer does the math to properly order the tweets so you don't share twice the same thing in a row.
+          Poffer connects to your <a href="https://getpocket.com">Pocket</a> account in order to retrieve the content you want to share.
+          It lets you write a few tweets about them to then add it to your <a href="https://buffer.com">Buffer</a> queue.
         </p>
 
         <p className={styles.description}>
-          Poffer is an <a href="https://github.com/Zhouzi/Poffer">open source</a> side project made with <span className="icon-code" /> by <a href="http://gabinaureche.com">Gabin</a>.
+          Read about how it could help you share more: "<a href="https://wizbii.tech/i-am-a-terrible-twitter-user-so-i-built-a-tool-to-help-me-out-b757c32c69b5?utm_source=poffer&utm_medium=hero&utm_campaign=open%20source">I am a terrible Twitter user so I built a tool to help me out</a>".
         </p>
       </div>
     </div>

@@ -1,0 +1,9 @@
+.container {
+  composes: container from 'styles/blue-background.css';
+}
+
+.inner {
+  composes: container from 'styles/grid.css';
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}

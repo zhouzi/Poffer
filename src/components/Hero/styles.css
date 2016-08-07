@@ -1,19 +1,7 @@
 @import 'styles/variables.css';
 
 .container {
-  color: #fff;
-  background-color: var(--colorPrimary);
-}
-
-.container a {
-  color: #fff;
-  text-decoration: none;
-  border-bottom: 2px solid var(--colorTextMuted);
-}
-
-.container a:focus,
-.container a:hover {
-  background-color: var(--colorTextMuted);
+  composes: container from 'styles/blue-background.css';
 }
 
 .inner {
