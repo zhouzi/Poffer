@@ -12,6 +12,9 @@
       "react"
     ]
   },
+  "engines": {
+    "node": "4.2.4"
+  },
   "devDependencies": {
     "babel-loader": "6.2.4",
     "babel-polyfill": "6.9.1",
