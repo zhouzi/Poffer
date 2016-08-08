@@ -44,6 +44,7 @@ app.use('/api/pocket', pocketRoute);
 
 app.get('/', function (req, res) {
   res.render('index', {
+    googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID,
     env: JSON.stringify({
       accounts: {
         buffer: {
