@@ -34,8 +34,18 @@ export default class WriteTweets extends Component {
               2
             </span>
 
-            Write Tweets
+            Write the tweets
           </div>
+
+          <p>
+            How many times would you like to tweet the same link?
+
+            <Range
+              onChange={(value) => this.props.onTweetTimesChange(value)}
+              value={this.props.tweetTimes}
+              max={5}
+            />
+          </p>
 
           {this.noItems() ? (
             <div className={styles.tipsContainer}>
@@ -50,16 +60,6 @@ export default class WriteTweets extends Component {
             </div>
           ) : (
             <div>
-              <p>
-                How many times would you like to share the same content?
-
-                <Range
-                  onChange={(value) => this.props.onTweetTimesChange(value)}
-                  value={this.props.tweetTimes}
-                  max={5}
-                />
-              </p>
-
               <ul className={styles.list}>
                 {map(this.props.items, (item, id) => (
                   <li key={id} className={styles.listItem}>

@@ -212,8 +212,13 @@ export default class Queue extends Component {
               3
             </span>
 
-            Review Queue
+            Review queue
           </div>
+
+          <p>
+            Your tweets are going to be added to Buffer in that order.
+            Note: you can also add some custom tweets in there, just click the "add tweet" button.
+          </p>
 
           {this.state.queue.length === 0 ? (
             <div className={styles.tipsContainer}>
@@ -227,10 +232,6 @@ export default class Queue extends Component {
             </div>
           ) : (
             <div>
-              <p>
-                That's the final order that's going to be sent to your Buffer queue.
-              </p>
-
               {this.state.queue.map((tweet, index) => (
                 <div key={index} className={styles.queueItem}>
                   <div className={styles.addTweetBlock}>

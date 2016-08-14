@@ -1,4 +1,9 @@
+@import 'styles/variables.css';
+
 .tipsContainer {
+  padding: 1rem;
+  border-radius: var(--borderRadius);
+  border: 2px dashed var(--colorGray);
 }
 
 .tipsTitle {

@@ -59,11 +59,11 @@ export default class PocketTagContainer extends Component {
               1
             </span>
 
-            Pocket Tag
+            List your Pocket items
           </div>
 
           <p>
-            What tag should be looked for?
+            What tag did you use to mark the items you want to share on Twitter?
           </p>
 
           <form className={styles.form} onSubmit={this.onSubmit}>
