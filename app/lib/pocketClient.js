@@ -18,8 +18,15 @@ module.exports.getRequestToken = function getRequestToken (callback) {
   });
 
   request.post(options, function (error, response, body) {
-    var request_token = JSON.parse(body).code;
-    callback(null, request_token);
+    var requestToken;
+    try {
+      requestToken = JSON.parse(body).code;
+    } catch (err) {
+      callback(err);
+      return;
+    }
+
+    callback(null, requestToken);
   });
 };
 
@@ -33,7 +40,15 @@ module.exports.getAccessToken = function getAccessToken (request_token, callback
   });
 
   request.post(options, function (error, response, body) {
-    callback(null, JSON.parse(body));
+    var accessToken;
+    try {
+      accessToken = JSON.parse(body);
+    } catch (err) {
+      callback(err);
+      return;
+    }
+
+    callback(null, accessToken);
   });
 };
 
@@ -50,7 +65,15 @@ module.exports.getItems = function getItems (access_token, tag, callback) {
   });
 
   request.post(options, function (error, response, body) {
-    var items = _.mapValues(JSON.parse(body).list, function (item) {
+    var items;
+    try {
+      items =JSON.parse(body).list;
+    } catch (err) {
+      callback(err);
+      return;
+    }
+
+    items = _.mapValues(items, function (item) {
       return _.pick(item, [
         'item_id',
         'resolved_title',

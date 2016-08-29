@@ -14,7 +14,15 @@ module.exports.getAccessToken = function getAccessToken (request_token, callback
   };
 
   request.post(options, function (error, response, body) {
-    callback(null, JSON.parse(body).access_token);
+    var accessToken;
+    try {
+      accessToken = JSON.parse(body).access_token;
+    } catch (err) {
+      callback(err);
+      return;
+    }
+
+    callback(null, accessToken);
   });
 };
 
@@ -24,7 +32,14 @@ module.exports.getTwitterProfile = function getTwitterProfile (accessToken, user
   };
 
   request.get(options, function (error, response, body) {
-    var profiles = JSON.parse(body);
+    var profiles;
+    try {
+      profiles = JSON.parse(body);
+    } catch (err) {
+      callback(err);
+      return;
+    }
+
     var twitterProfiles = profiles
       .filter(function (profile) {
         return profile.service === 'twitter';
@@ -59,7 +74,14 @@ module.exports.addItemToQueue = function addItemToQueue (accessToken, profile_id
   };
 
   request.post(options, function (err, res, body) {
-    var data = JSON.parse(body);
+    var data;
+
+    try {
+      data = JSON.parse(body);
+    } catch (err) {
+      callback(err);
+      return;
+    }
 
     if (data.success !== true) {
       callback(new Error(data.error || data.message));
