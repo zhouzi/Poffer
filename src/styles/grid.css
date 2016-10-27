@@ -9,7 +9,7 @@
 }
 
 .row {
-  margin: 0 -0.5rem;
+  margin-top: -0.5rem;
 }
 
 .row:before,
@@ -20,6 +20,24 @@
 }
 
 .column {
-  float: left;
-  padding: 0 0.5rem;
+  padding: 0.5rem 0;
+}
+
+@media (min-width: 600px) {
+  .row {
+    margin: 0 -0.5rem;
+  }
+
+  .column {
+    float: left;
+    padding: 0 0.5rem;
+  }
+
+  .column8 {
+    width: 66.6666667%;
+  }
+
+  .column4 {
+    width: 33.3333333%;
+  }
 }
