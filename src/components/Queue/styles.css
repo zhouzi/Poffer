@@ -27,6 +27,7 @@
 
 .tweetContent {
   font-size: 1.2rem;
+  overflow-wrap: break-word;
 }
 
 .tweetImage {
@@ -48,11 +49,11 @@
 }
 
 .formInput {
-  width: 66.6666667%;
+  composes: column8 from 'styles/grid.css';
 }
 
 .formButton {
-  width: 33.3333333%;
+  composes: column4 from 'styles/grid.css';
 }
 
 .input {
