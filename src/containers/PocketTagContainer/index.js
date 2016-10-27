@@ -17,17 +17,16 @@ export default class PocketTagContainer extends Component {
   };
 
   onMessage = (message) => {
-    if (typeof message.data !== 'string') {
+    if (message.data == null) {
       return;
     }
 
-    const requestTokenEventPrefix = 'poffer:pocket:request-token:';
-    if (message.data.indexOf(requestTokenEventPrefix) === 0) {
-      const requestToken = message.data.replace(requestTokenEventPrefix, '');
+    if (message.data.type === 'POCKET_REQUEST_TOKEN') {
+      const requestToken = message.data.payload;
       this.props.onRequestToken(requestToken);
     }
 
-    if (message.data === 'poffer:pocket:auth') {
+    if (message.data.type === 'POCKET_AUTH') {
       this.props.onTagSelected(this.state.value);
     }
   };

@@ -1,3 +1,3 @@
 script.
-  window.opener.postMessage('poffer:pocket:auth', '*');
+  window.opener.postMessage({ type: 'POCKET_AUTH' }, '*');
   window.close();
