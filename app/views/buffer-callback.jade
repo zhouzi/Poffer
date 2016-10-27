@@ -1,4 +1,4 @@
 script.
   var code = location.search.match(/code=([^&]+)/)[1];
-  window.opener.postMessage('poffer:buffer:auth:' + decodeURIComponent(code), '*');
+  window.opener.postMessage({ type: 'BUFFER_AUTH', payload: decodeURIComponent(code) }, '*');
   window.close();

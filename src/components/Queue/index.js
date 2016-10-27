@@ -32,12 +32,12 @@ export default class Queue extends Component {
   }
 
   onMessage = (message) => {
-    if (typeof message.data !== 'string') {
+    if (message.data == null) {
       return;
     }
 
-    if (message.data.indexOf('poffer:buffer:auth') === 0) {
-      const code = message.data.replace('poffer:buffer:auth:', '');
+    if (message.data.type === 'BUFFER_AUTH') {
+      const code = message.data.payload;
 
       const queue = this.state.queue
         // remove empty tweets
