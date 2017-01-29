@@ -1,6 +1,6 @@
 # Poffer
 
-A tool that makes it easier to share the content you like thanks to Pocket+Buffer.
+Automate sharing Pocket links to Twitter through Buffer.
 
 * [Web App](http://poffer.gabinaureche.com)
 * [Demo](#demo)
